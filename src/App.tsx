@@ -12,6 +12,7 @@ import { TuneModal } from './components/TuneModal';
 import { AICoachModal } from './components/AICoachModal';
 import { AILiveVoiceModal } from './components/AILiveVoiceModal';
 import { NotoProModal } from './components/NotoProModal';
+import { PremiumScreen } from './components/PremiumScreen';
 import { playChime } from './utils/audio';
 
 export default function App() {
@@ -64,7 +65,7 @@ export default function App() {
   };
 
   const handleOpenProModal = () => {
-    setIsProModalOpen(true);
+    setActiveTab('premium');
   };
 
   const handleUpgradePro = (plan: 'monthly' | 'semi-annual' | 'annual') => {
@@ -275,6 +276,12 @@ export default function App() {
               />
             ) : activeTab === 'notes' ? (
               <NotesScreen />
+            ) : activeTab === 'premium' ? (
+              <PremiumScreen
+                userPrefs={userPrefs}
+                onUpdatePrefs={setUserPrefs}
+                onNavigateToTab={(tab) => setActiveTab(tab)}
+              />
             ) : (
               <>
                 <TopAppBar
@@ -357,10 +364,18 @@ export default function App() {
             )}
 
             {activeTab === 'notes' && <NotesScreen />}
+
+            {activeTab === 'premium' && (
+              <PremiumScreen
+                userPrefs={userPrefs}
+                onUpdatePrefs={setUserPrefs}
+                onNavigateToTab={(tab) => setActiveTab(tab)}
+              />
+            )}
           </main>
 
           {/* Floating Action Button for Contextual Quick Add */}
-          {activeTab !== 'focus' && (
+          {activeTab !== 'focus' && activeTab !== 'premium' && (
             <button
               type="button"
               onClick={() => setIsQuickAddOpen(true)}
@@ -411,6 +426,10 @@ export default function App() {
         isOpen={isAILiveVoiceOpen}
         onClose={() => setIsAILiveVoiceOpen(false)}
         userContextSummary={tasks.map((t) => t.title).join(', ')}
+        onSwitchToTextChat={() => {
+          setIsAILiveVoiceOpen(false);
+          setIsAICoachOpen(true);
+        }}
       />
 
       {/* NOTO Pro Paywall / Upgrade Modal */}
@@ -420,6 +439,14 @@ export default function App() {
         isPro={userPrefs.isPro}
         currentPlan={userPrefs.proPlan || 'semi-annual'}
         onUpgrade={handleUpgradePro}
+        onNavigateToCheckout={(plan) => {
+          setUserPrefs((prev) => ({
+            ...prev,
+            proPlan: plan,
+          }));
+          setIsProModalOpen(false);
+          setActiveTab('premium');
+        }}
       />
     </div>
   );

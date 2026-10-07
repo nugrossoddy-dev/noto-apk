@@ -220,6 +220,37 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
     );
   }
 
+  // Premium Tab Header
+  if (activeTab === 'premium') {
+    return (
+      <header className="sticky top-0 z-40 bg-surface flex justify-between items-center w-full px-5 py-3 border-b border-surface-container-highest transition-colors duration-150">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-full bg-secondary/15 flex items-center justify-center text-secondary">
+            <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <h1 className="text-[18px] font-semibold tracking-tight text-on-surface leading-tight">
+              NOTO Pro
+            </h1>
+            {isPro && (
+              <span className="px-1.5 py-0.2 rounded bg-secondary/15 text-secondary text-[10px] font-bold">
+                ACTIVE
+              </span>
+            )}
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onOpenTune}
+          aria-label="Settings"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors"
+        >
+          <span className="material-symbols-outlined text-[20px]">tune</span>
+        </button>
+      </header>
+    );
+  }
+
   // Notes Tab Header
   return (
     <header className="sticky top-0 z-40 bg-surface flex justify-between items-center w-full px-5 py-3 border-b border-surface-container-highest transition-colors duration-150">

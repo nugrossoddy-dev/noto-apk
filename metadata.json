@@ -1,6 +1,6 @@
 {
   "name": "NOTO — Minimal Focus & Daily Rhythm",
   "description": "A warm editorial minimalist daily agenda, deep work focus sprint tracker, and calm productivity companion.",
-  "requestFramePermissions": [],
+  "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

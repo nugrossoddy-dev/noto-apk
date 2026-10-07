@@ -79,21 +79,42 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) 
       <button
         type="button"
         onClick={() => onTabChange('notes')}
-        className={`flex flex-col items-center justify-center transition-all duration-150 active:scale-95 py-1 px-3 rounded-lg ${
+        className={`flex flex-col items-center justify-center transition-all duration-150 active:scale-95 py-1 px-2 rounded-lg ${
           activeTab === 'notes'
             ? 'text-primary font-medium'
             : 'text-on-surface-variant font-normal hover:text-on-surface'
         }`}
       >
         <span
-          className={`material-symbols-outlined text-[22px] ${
+          className={`material-symbols-outlined text-[20px] ${
             activeTab === 'notes' ? 'filled' : ''
           }`}
           style={{ fontVariationSettings: activeTab === 'notes' ? "'FILL' 1" : "'FILL' 0" }}
         >
           edit_note
         </span>
-        <span className="text-[11px] font-semibold tracking-wider mt-0.5">Notes</span>
+        <span className="text-[10px] font-semibold tracking-wider mt-0.5">Notes</span>
+      </button>
+
+      {/* Tab 5: Premium */}
+      <button
+        type="button"
+        onClick={() => onTabChange('premium')}
+        className={`flex flex-col items-center justify-center transition-all duration-150 active:scale-95 py-1 px-2 rounded-lg ${
+          activeTab === 'premium'
+            ? 'text-secondary font-medium'
+            : 'text-on-surface-variant font-normal hover:text-on-surface'
+        }`}
+      >
+        <span
+          className={`material-symbols-outlined text-[20px] ${
+            activeTab === 'premium' ? 'filled text-secondary' : ''
+          }`}
+          style={{ fontVariationSettings: activeTab === 'premium' ? "'FILL' 1" : "'FILL' 0" }}
+        >
+          workspace_premium
+        </span>
+        <span className="text-[10px] font-semibold tracking-wider mt-0.5">Premium</span>
       </button>
     </nav>
   );

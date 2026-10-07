@@ -7,6 +7,7 @@ interface NotoProModalProps {
   isPro?: boolean;
   currentPlan?: 'monthly' | 'semi-annual' | 'annual';
   onUpgrade: (plan: 'monthly' | 'semi-annual' | 'annual') => void;
+  onNavigateToCheckout?: (plan: 'monthly' | 'semi-annual' | 'annual') => void;
 }
 
 export const NotoProModal: React.FC<NotoProModalProps> = ({
@@ -15,6 +16,7 @@ export const NotoProModal: React.FC<NotoProModalProps> = ({
   isPro = false,
   currentPlan = 'semi-annual',
   onUpgrade,
+  onNavigateToCheckout,
 }) => {
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'semi-annual' | 'annual'>(currentPlan);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -289,18 +291,34 @@ export const NotoProModal: React.FC<NotoProModalProps> = ({
               <span>NOTO Pro Activated!</span>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={handleUnlock}
-              className="w-full h-12 bg-primary hover:bg-[#222222] text-on-primary rounded-full font-medium text-[16px] flex items-center justify-center space-x-2 active:scale-[0.99] transition-all cursor-pointer shadow-sm"
-            >
-              <span>{isPro ? 'Update NOTO Pro Plan' : 'Unlock NOTO Pro'}</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
+            <>
+              {onNavigateToCheckout ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onNavigateToCheckout(selectedPlan);
+                  }}
+                  className="w-full h-12 bg-primary hover:bg-[#222222] text-on-primary rounded-full font-medium text-[15px] flex items-center justify-center space-x-2 active:scale-[0.99] transition-all cursor-pointer shadow-sm"
+                >
+                  <span>Lanjut ke Formulir Pembayaran ({selectedPlan === 'monthly' ? 'Bulanan' : selectedPlan === 'semi-annual' ? '6 Bulan' : '1 Tahun'})</span>
+                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleUnlock}
+                  className="w-full h-12 bg-primary hover:bg-[#222222] text-on-primary rounded-full font-medium text-[16px] flex items-center justify-center space-x-2 active:scale-[0.99] transition-all cursor-pointer shadow-sm"
+                >
+                  <span>{isPro ? 'Update NOTO Pro Plan' : 'Unlock NOTO Pro'}</span>
+                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </button>
+              )}
+            </>
           )}
 
           <p className="text-[10px] text-center text-outline leading-tight">
-            Cancel anytime in settings. Billed in IDR. Instant activation.
+            Pembayaran instan QRIS &amp; Virtual Account. Batal kapan saja.
           </p>
         </div>
       </div>
